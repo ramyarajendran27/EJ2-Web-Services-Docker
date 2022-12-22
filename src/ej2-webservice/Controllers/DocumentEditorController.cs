@@ -268,6 +268,40 @@ namespace EJ2WebService.Controllers
         [AcceptVerbs("Post")]
         [HttpPost]
         [EnableCors("AllowAllOrigins")]
+        [Route("Save")]
+        public void Save([FromBody] SaveParameter data)
+        {
+            string name = data.FileName;
+            string format = RetrieveFileType(name);
+            if (string.IsNullOrEmpty(name))
+            {
+                name = "Document1.doc";
+            }
+            WDocument document = WordDocument.Save(data.Content);
+            // Saves the document to server machine file system, you can customize here to save into databases or file servers based on requirement.
+            FileStream fileStream = new FileStream(name, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            document.Save(fileStream, GetWFormatType(format));
+            document.Close();
+            fileStream.Close();
+        }
+
+        public class SaveParameter
+        {
+            public string Content { get; set; }
+            public string FileName { get; set; }
+        }
+
+        private string RetrieveFileType(string name)
+        {
+            int index = name.LastIndexOf('.');
+            string format = index > -1 && index < name.Length - 1 ?
+                name.Substring(index) : ".doc";
+            return format;
+        }
+
+        [AcceptVerbs("Post")]
+        [HttpPost]
+        [EnableCors("AllowAllOrigins")]
         [Route("Export")]
         public FileStreamResult Export(IFormCollection data)
         {
