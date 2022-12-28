@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Data.Edm;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Routing;
@@ -19,6 +18,7 @@ using EJ2WebService.Controllers;
 using Syncfusion.EJ2.SpellChecker;
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace EJ2WebService
 {
@@ -63,13 +63,15 @@ namespace EJ2WebService
         }
 
         public IConfiguration Configuration { get; }
-
+        internal static bool isRedisCacheEnable = false;
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOData();
-            services.AddMvc().AddJsonOptions(x => {
-                x.SerializerSettings.ContractResolver = null;
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                // Use the default property (Pascal) casing
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
 
             services.AddCors(options =>

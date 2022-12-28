@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:2.1 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
 RUN ln -s /lib/x86_64-linux-gnu/libdl-2.24.so /lib/x86_64-linux-gnu/libdl.so
 
 # install System.Drawing native dependencies
@@ -14,7 +14,7 @@ ENV SPELLCHECK_CACHE_COUNT=""
 ENV DOCUMENT_SLIDING_EXPIRATION_TIME="10"
 ENV REDIS_CACHE_CONNECTION_STRING=""
 ENV DOCUMENT_PATH=""
-FROM mcr.microsoft.com/dotnet/sdk:2.1 AS build
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 
 WORKDIR /source
 COPY ["src/ej2-webservice/ej2-webservice.csproj", "./ej2-webservice/ej2-webservice.csproj"]

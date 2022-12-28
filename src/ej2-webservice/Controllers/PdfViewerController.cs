@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http;
+using EJ2WebService;
 
 namespace ej2_pdfviewer_web_service.Controllers
 {
