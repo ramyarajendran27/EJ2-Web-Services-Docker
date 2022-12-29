@@ -9,10 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNet.OData.Builder;
-using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.OData.UriParser;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using EJ2WebService.Controllers;
 using Syncfusion.EJ2.SpellChecker;
@@ -45,7 +42,7 @@ namespace EJ2WebService
             //if it is null.
             path = string.IsNullOrEmpty(path) ? Path.Combine(env.ContentRootPath, "Data") : Path.Combine(env.ContentRootPath, path);
             //Set the default spellcheck.json file if the json filename is empty.
-            jsonFileName = string.IsNullOrEmpty(jsonFileName) ? Path.Combine(path, "spellcheck.json") : Path.Combine(path, jsonFileName) ;
+            jsonFileName = string.IsNullOrEmpty(jsonFileName) ? Path.Combine(path, "spellcheck.json") : Path.Combine(path, jsonFileName);
             if (System.IO.File.Exists(jsonFileName))
             {
                 string jsonImport = System.IO.File.ReadAllText(jsonFileName);
@@ -67,7 +64,6 @@ namespace EJ2WebService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOData();
             services.AddControllers().AddNewtonsoftJson(options =>
             {
                 // Use the default property (Pascal) casing
@@ -83,7 +79,7 @@ namespace EJ2WebService
                     .AllowAnyHeader();
                 });
             });
-           
+
             // Add framework services.
             services.AddMvc();
         }
@@ -92,7 +88,7 @@ namespace EJ2WebService
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             string license_key = Configuration["SYNCFUSION_LICENSE_KEY"];
-            if (license_key!=null && license_key!=string.Empty)
+            if (license_key != null && license_key != string.Empty)
                 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(license_key);
             app.UseDeveloperExceptionPage();
             app.UseCors("AllowAllOrigins");
@@ -100,10 +96,10 @@ namespace EJ2WebService
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseMvc(routes =>
+            app.UseRouting();
+            app.UseEndpoints(routes =>
             {
-                routes.MapRoute("default", "{api}/{controller}/{action}/{id?}");
+                routes.MapControllerRoute("default", "{api}/{controller}/{action}/{id?}");
             });
         }
 
