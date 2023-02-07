@@ -43,13 +43,26 @@ namespace EJ2WebService.Controllers
                 file.FileName.Substring(index) : ".docx";
             file.CopyTo(stream);
             stream.Position = 0;
-
+            //Hooks MetafileImageParsed event.
+            WordDocument.MetafileImageParsed += OnMetafileImageParsed;
             WordDocument document = WordDocument.Load(stream, GetFormatType(type.ToLower()));
+            //Unhooks MetafileImageParsed event.
+            WordDocument.MetafileImageParsed -= OnMetafileImageParsed;
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(document);
             document.Dispose();
             return json;
         }
 
+        //Converts Metafile to raster image.
+        private static void OnMetafileImageParsed(object sender, MetafileImageParsedEventArgs args)
+        {
+            //You can write your own method definition for converting metafile to raster image using any third-party image converter.
+            args.ImageStream = ConvertMetafileToRasterImage(args.MetafileStream);
+        }
+
+        private static Stream ConvertMetafileToRasterImage(Stream ImageStream){
+            return ImageStream;
+        }
         [AcceptVerbs("Post")]
         [HttpPost]
         [EnableCors("AllowAllOrigins")]
@@ -118,7 +131,11 @@ namespace EJ2WebService.Controllers
             {
                 try
                 {
+                    //Hooks MetafileImageParsed event.
+                    WordDocument.MetafileImageParsed += OnMetafileImageParsed;
                     WordDocument document = WordDocument.LoadString(param.content, GetFormatType(param.type.ToLower()));
+                    //Unhooks MetafileImageParsed event.
+                    WordDocument.MetafileImageParsed -= OnMetafileImageParsed;
                     string json = Newtonsoft.Json.JsonConvert.SerializeObject(document);
                     document.Dispose();
                     return json;
