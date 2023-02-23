@@ -91,12 +91,15 @@ namespace EJ2WebService
             if (license_key != null && license_key != string.Empty)
                 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(license_key);
             app.UseDeveloperExceptionPage();
-            app.UseCors("AllowAllOrigins");
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             app.UseRouting();
+
+            app.UseCors("AllowAllOrigins");
+
             app.UseEndpoints(routes =>
             {
                 routes.MapControllerRoute("default", "{api}/{controller}/{action}/{id?}");

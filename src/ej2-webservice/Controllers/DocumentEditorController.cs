@@ -30,6 +30,7 @@ namespace EJ2WebService.Controllers
 
         [AcceptVerbs("Post")]
         [HttpPost]
+        [EnableCors("AllowAllOrigins")]
         [Route("Import")]
         public string Import(IFormCollection data)
         {
@@ -64,6 +65,7 @@ namespace EJ2WebService.Controllers
         }
         [AcceptVerbs("Post")]
         [HttpPost]
+        [EnableCors("AllowAllOrigins")]
         [Route("SpellCheck")]
         public string SpellCheck([FromBody] SpellCheckJsonData spellChecker)
         {
@@ -87,6 +89,7 @@ namespace EJ2WebService.Controllers
 
         [AcceptVerbs("Post")]
         [HttpPost]
+        [EnableCors("AllowAllOrigins")]
         [Route("SpellCheckByPage")]
         public string SpellCheckByPage([FromBody] SpellCheckJsonData spellChecker)
         {
@@ -120,6 +123,7 @@ namespace EJ2WebService.Controllers
 
         [AcceptVerbs("Post")]
         [HttpPost]
+        [EnableCors("AllowAllOrigins")]
         [Route("SystemClipboard")]
         public string SystemClipboard([FromBody]CustomParameter param)
         {
@@ -156,6 +160,7 @@ namespace EJ2WebService.Controllers
         }
         [AcceptVerbs("Post")]
         [HttpPost]
+        [EnableCors("AllowAllOrigins")]
         [Route("RestrictEditing")]
         public string[] RestrictEditing([FromBody]CustomRestrictParameter param)
         {
@@ -167,6 +172,7 @@ namespace EJ2WebService.Controllers
 
         [AcceptVerbs("Post")]
         [HttpPost]
+        [EnableCors("AllowAllOrigins")]
         [Route("LoadDefault")]
         public string LoadDefault()
         {
@@ -179,6 +185,7 @@ namespace EJ2WebService.Controllers
             return json;
         }
         [HttpPost]
+        [EnableCors("AllowAllOrigins")]
         [Route("LoadDocument")]
         public string LoadDocument([FromForm] UploadDocument uploadDocument)
         {
@@ -277,6 +284,7 @@ namespace EJ2WebService.Controllers
 
         [AcceptVerbs("Post")]
         [HttpPost]
+        [EnableCors("AllowAllOrigins")]
         [Route("Save")]
         public void Save([FromBody] SaveParameter data)
         {
@@ -310,6 +318,7 @@ namespace EJ2WebService.Controllers
 
         [AcceptVerbs("Post")]
         [HttpPost]
+        [EnableCors("AllowAllOrigins")]
         [Route("Export")]
         public FileStreamResult Export(IFormCollection data)
         {
