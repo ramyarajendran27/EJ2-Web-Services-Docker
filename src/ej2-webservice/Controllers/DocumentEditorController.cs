@@ -44,10 +44,10 @@ namespace EJ2WebService.Controllers
             file.CopyTo(stream);
             stream.Position = 0;
             //Hooks MetafileImageParsed event.
-            WordDocument.MetafileImageParsed += OnMetafileImageParsed;
+          //  WordDocument.MetafileImageParsed += OnMetafileImageParsed;
             WordDocument document = WordDocument.Load(stream, GetFormatType(type.ToLower()));
             //Unhooks MetafileImageParsed event.
-            WordDocument.MetafileImageParsed -= OnMetafileImageParsed;
+          //  WordDocument.MetafileImageParsed -= OnMetafileImageParsed;
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(document);
             document.Dispose();
             return json;
