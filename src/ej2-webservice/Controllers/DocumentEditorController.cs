@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Syncfusion.EJ2.DocumentEditor;
 using WDocument = Syncfusion.DocIO.DLS.WordDocument;
-using WPicture = Syncfusion.DocIO.DLS.WPicture;
 using WFormatType = Syncfusion.DocIO.FormatType;
 using Syncfusion.EJ2.SpellChecker;
 using EJ2WebService;
@@ -70,7 +69,7 @@ namespace EJ2WebService.Controllers
         }
         private static Stream GetManifestResourceStream(string fileName)
         {
-            System.Reflection.Assembly execAssembly = typeof(WPicture).GetTypeInfo().Assembly;
+            System.Reflection.Assembly execAssembly = typeof(WDocument).GetTypeInfo().Assembly;
             string[] resourceNames = execAssembly.GetManifestResourceNames();
             foreach (string resourceName in resourceNames)
             {
